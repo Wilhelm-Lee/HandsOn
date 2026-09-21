@@ -6,16 +6,47 @@ class Program
     {
         Console.WriteLine("Hello, World!");
 
-        Command cmd_help = new Command("help", new Command[] {
-            new Command("about"),
-            new Command("command", new Command[] {
-                new Command("help"),
-                new Command("exit", new Command[] {
-                    new Command("%d")
+        LambdaCommand lcmd_help = new LambdaCommand("help",
+            new LambdaCommand[] {
+                new LambdaCommand("exit", (string[] args) =>
+                {
+                    int.TryParse(args[1], out int code);
+                    Environment.Exit(code);
+                    return 0;
                 }),
-            })
-        });
+                new LambdaCommand("about", (string[] args) =>
+                {
+                    Console.WriteLine("This subcommand outputs the information about about.");
+                    return 0;
+                }),
+                new LambdaCommand("command", new LambdaCommand[] {
+                    new LambdaCommand("help", (string[] args) =>
+                    {
+                        Console.WriteLine("A help subcommand outputs current help message.");
+                        return 0;
+                    }),
+                    new LambdaCommand("exit", new LambdaCommand[] {
+                        new LambdaCommand("%d", (string[] args) =>
+                        {
+                            return 0;
+                        })
+                    }, (string[] args) =>
+                    {
+                        Console.WriteLine("Exit exits the program in the exit using exitcode.");
+                        return 0;
+                    }),
+                }, (string[] args) =>
+                {
+                    Console.WriteLine("Get helps for each supported command.");
+                    return 0;
+                })
+            }, (string[] args) =>
+            {
+                Console.WriteLine("This is a message of help.");
+                return 0;
+            }
+        );
 
-        Console.WriteLine(cmd_help);
+        Console.WriteLine(lcmd_help);
     }
 }
