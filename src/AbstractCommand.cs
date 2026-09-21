@@ -1,6 +1,6 @@
 namespace Foundational;
 
-abstract class AbstractCommand
+abstract class AbstractCommand : Executable
 {
     protected string identifier = "";
     protected AbstractCommand[] subcommands = [];
@@ -35,5 +35,10 @@ abstract class AbstractCommand
     public AbstractCommand[] GetSubcommands()
     {
         return this.subcommands;
+    }
+
+    public virtual int Execute(string[] args)
+    {
+        return 0;
     }
 }

@@ -1,6 +1,6 @@
 namespace Foundational;
 
-class LambdaCommand : AbstractCommand, Executable
+class LambdaCommand : AbstractCommand
 {
     private readonly Func<string[], int> func = (string[] args) => 0;
 
@@ -39,7 +39,7 @@ class LambdaCommand : AbstractCommand, Executable
         this.func = func;
     }
 
-    public int Execute(string[] args)
+    public override int Execute(string[] args)
     {
         return this.func(args);
     }
