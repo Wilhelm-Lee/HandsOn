@@ -10,14 +10,6 @@ class LambdaCommand : AbstractCommand
         Func<string[], int> func
     ) : base(identifier, subcommands)
     {
-        if (identifier == null)
-        {
-            return;
-        }
-
-        this.identifier = identifier;
-        this.subcommands = subcommands;
-
         if (func == null)
         {
             return;
@@ -31,12 +23,7 @@ class LambdaCommand : AbstractCommand
         Func<string[], int> func
     ) : base(identifier)
     {
-        if (func == null)
-        {
-            return;
-        }
-
-        this.func = func;
+        new LambdaCommand(identifier, [], func);
     }
 
     public override int Execute(string[] args)
