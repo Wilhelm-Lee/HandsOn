@@ -2,8 +2,8 @@ namespace Foundational;
 
 abstract class AbstractCommand : Executable
 {
-    protected string identifier = "";
-    protected AbstractCommand[] subcommands = [];
+    public string identifier { get;protected set; } = "";
+    public AbstractCommand[] subcommands { get; protected set; } = [];
 
     public AbstractCommand(string identifier, AbstractCommand[] subcommands)
     {
@@ -27,15 +27,15 @@ abstract class AbstractCommand : Executable
         this.subcommands = [];
     }
 
-    public string GetIdentifier()
-    {
-        return this.identifier;
-    }
-
-    public AbstractCommand[] GetSubcommands()
-    {
-        return this.subcommands;
-    }
+    // public string GetIdentifier()
+    // {
+    //     return this.identifier;
+    // }
+    //
+    // public AbstractCommand[] GetSubcommands()
+    // {
+    //     return this.subcommands;
+    // }
 
     public virtual int Execute(string[] args)
     {
