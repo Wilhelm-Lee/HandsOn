@@ -1,46 +1,50 @@
 using Foundational;
 
-class Program
+internal class Program
 {
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
         Console.WriteLine("Hello, World!");
 
-        LambdaCommand lcmd_help = new LambdaCommand("help",
-            new LambdaCommand[] {
-                new LambdaCommand("exit", (string[] args) =>
+        LambdaCommand lcmd_help = new("help",
+            [
+                new LambdaCommand("exit", _ =>
                 {
-                    int.TryParse(args[1], out int code);
+                    if (!int.TryParse(args[1], out var code))
+                    {
+                        Environment.Exit(0);
+                    }
+
                     Environment.Exit(code);
                     return 0;
                 }),
-                new LambdaCommand("about", (string[] args) =>
+                new LambdaCommand("about", _ =>
                 {
-                    Console.WriteLine("This subcommand outputs the information about about.");
+                    Console.WriteLine(
+                        "This subcommand outputs the information about about.");
                     return 0;
                 }),
-                new LambdaCommand("command", new LambdaCommand[] {
-                    new LambdaCommand("help", (string[] args) =>
+                new LambdaCommand("command", [
+                    new LambdaCommand("help", _ =>
                     {
-                        Console.WriteLine("A help subcommand outputs current help message.");
+                        Console.WriteLine(
+                            "A help subcommand outputs current help message.");
                         return 0;
                     }),
-                    new LambdaCommand("exit", new LambdaCommand[] {
-                        new LambdaCommand("%d", (string[] args) =>
-                        {
-                            return 0;
-                        })
-                    }, (string[] args) =>
+                    new LambdaCommand("exit", [
+                        new LambdaCommand("%d", _ => 0)
+                    ], _ =>
                     {
-                        Console.WriteLine("Exit exits the program in the exit using exitcode.");
+                        Console.WriteLine(
+                            "Exit exits the program in the exit using exitcode.");
                         return 0;
-                    }),
-                }, (string[] args) =>
+                    })
+                ], _ =>
                 {
                     Console.WriteLine("Get helps for each supported command.");
                     return 0;
                 })
-            }, (string[] args) =>
+            ], _ =>
             {
                 Console.WriteLine("This is a message of help.");
                 return 0;
@@ -48,5 +52,7 @@ class Program
         );
 
         Console.WriteLine(lcmd_help);
+
+        lcmd_help.Execute([]);
     }
 }
