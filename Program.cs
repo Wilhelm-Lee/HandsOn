@@ -51,6 +51,21 @@ internal class Program
             }
         );
 
+
+	// Test
+	LambdaCommand ls = new LambdaCommand("help", (string[] args) => 250);
+	Console.WriteLine(ls.identifier);
+	Console.WriteLine(ls.subcommands);
+
+    	// Lambda.cs  private readonly Func<string[], int> func = (string[] args) => 0;
+	// return 0
+	//
+	// change
+	// return 255
+	Console.WriteLine(ls.Execute(["new", "??"]));
+
+
+
         Console.WriteLine(lcmd_help);
 
         lcmd_help.Execute([]);
