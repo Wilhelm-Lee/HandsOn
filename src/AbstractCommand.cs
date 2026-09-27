@@ -2,7 +2,7 @@ namespace Foundational;
 
 abstract class AbstractCommand : Executable
 {
-    public string identifier { get;protected set; } = "";
+    public string identifier { get; protected set; } = "";
     public AbstractCommand[] subcommands { get; protected set; } = [];
 
     public AbstractCommand(string identifier, AbstractCommand[] subcommands)
