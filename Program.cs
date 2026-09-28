@@ -1,71 +1,112 @@
+using System.Diagnostics;
+using System.Runtime.InteropServices.JavaScript;
 using Foundational;
 
-internal class Program
+namespace HandsOn;
+
+internal static class Program
 {
+    /* 输入： 一个整数 n，描述后续跟随元素数量。
+             跟随 n 个整数。
+       输出： 倒序输出所给所有元素。
+       样例： 3 1 2 3
+             3 2 1
+     */
+
+
+    /*
+     * 输入： 一个整数 n, 描述后续跟随元素数量。
+     *       跟随 n 个字符串，以空格分隔。
+     * 输出： 按序输出每个字符串的倒序内容。
+     *
+     * 样例： 3 apple banana coconut
+     *       elppa ananab tunococ
+     */
+
+    /*
+     * 输入： 两个整数 n, m
+     *       跟随 n 行输入
+     *       每行跟随 m 个整数元素
+     * 输出： 找出在 n 行中的最大平均值。
+     * 样例： 3 3
+     *       1 2 3   // avg == 2
+     *       3 4 5   // avg == 4
+     *       5 6 7   // avg == 6
+     *       6
+     */
+    public static int[] Reverse(int n, int[] intArray) {
+        // int[n] intArrayReverse;
+        if (n == 0)
+        {
+            return [];
+        }
+        int[] intArrayReverse = new int[n];
+        for (int i = n-1; i >= 0; i--)
+        {
+            Console.WriteLine($"{i}");
+            intArrayReverse[n - i -1] = intArray[i];
+        }
+        return intArrayReverse;
+    }
+
+    public static string ReverseString(string stringItem)
+    {
+        char[] chars = stringItem.ToCharArray();
+        Array.Reverse(chars);
+
+        string reversed = new string(chars);
+        return reversed;
+    }
+    
+    public static string[] ReverseStringArray(int n, string[] stringArray) {
+        // string[n] stingArrayReverse;
+        if (n == 0)
+        {
+            return [];
+        }
+        //string[] stringArrayReverse = new string[n];
+        //for (int i = n-1; i >= 0; i--)
+        //{
+        //    Console.WriteLine($"{i}");
+        //    stringArrayReverse[n - i -1] = stringArray[i];
+        //}
+        int[] intArrayReverse = new int[n];
+        for (int i = 0; i < n; i++)
+        {
+            stringArray[i] = ReverseString(stringArray[i]);
+        }
+        //foreach (var stringItem in stringArray)
+        //{
+        //    stringArray.stringItem  = stringItem.Reverse();
+        //}
+        return stringArray;
+    }
+
+    // 3 a wow racecar
     private static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
-
-        LambdaCommand lcmd_help = new("help",
-            [
-                new LambdaCommand("exit", _ =>
-                {
-                    if (!int.TryParse(args[1], out var code))
-                    {
-                        Environment.Exit(0);
-                    }
-
-                    Environment.Exit(code);
-                    return 0;
-                }),
-                new LambdaCommand("about", _ =>
-                {
-                    Console.WriteLine(
-                        "This subcommand outputs the information about about.");
-                    return 0;
-                }),
-                new LambdaCommand("command", [
-                    new LambdaCommand("help", _ =>
-                    {
-                        Console.WriteLine(
-                            "A help subcommand outputs current help message.");
-                        return 0;
-                    }),
-                    new LambdaCommand("exit", [
-                        new LambdaCommand("%d", _ => 0)
-                    ], _ =>
-                    {
-                        Console.WriteLine(
-                            "Exit exits the program in the exit using exitcode.");
-                        return 0;
-                    })
-                ], _ =>
-                {
-                    Console.WriteLine("Get helps for each supported command.");
-                    return 0;
-                })
-            ], _ =>
-            {
-                Console.WriteLine("This is a message of help.");
-                return 0;
-            }
-        );
-
-        // Test
-        LambdaCommand ls = new LambdaCommand("help", (string[] args) => 250);
-        Console.WriteLine(ls.identifier);
-        Console.WriteLine(ls.subcommands);
-
-        // Lambda.cs  private readonly Func<string[], int> func = (string[] args) => 0;
-        // return 0
-        //
-        // change
-        // return 255
-        Console.WriteLine(ls.Execute(["new", "??"]));
 
 
-        Console.WriteLine(lcmd_help);
+        // foreach (var item in Reverse(3, [1, 2, 3]))
+        // {
+        //     Console.Write($"{item} ");
+        // }
+        // foreach (var item in Reverse(4, [10, 20, 30, 40]))
+        // {
+        //     Console.Write($"{item} ");
+        // }
+        foreach (var item in ReverseStringArray(3, ["apple", "banana", "coconut"]))
+        {
+            Console.Write($"{item} ");
+        }
 
-        lcmd_help.Execute([]);
+        Console.WriteLine("\n-----");
+       
+        foreach (var item in ReverseStringArray(3, ["a", "wow", "racecar"]))
+        {
+            Console.Write($"{item} ");
+        }
     }
 }
+
+
