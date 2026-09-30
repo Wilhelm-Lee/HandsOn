@@ -15,16 +15,15 @@ internal static class Program
         // indent.SetAge(20);
         // indent.PrintAge();
 
-        Person li = new Person(12, HandsOn.Personality.TRADITIONAL);
-        Person mo = new Person(12, HandsOn.Personality.NOVEL);
+        // Person li = new Person(12, HandsOn.Personality.TRADITIONAL);
+        // Person mo = new Person(12, HandsOn.Personality.NOVEL);
+        //
+        // li.HandShake(mo);
+        //
+        // li.Jump();
+        // mo.Talk();
 
-        li.HandShake(mo);
-
-        li.Jump();
-        mo.Talk();
-
-        return 0;
-    }
+		
 
     // Create an interface that declares:
     //   1. ChangeMood(Mood newMood)
@@ -33,5 +32,16 @@ internal static class Program
     //   int walkedMeters;
     //   abstract Walk(int meters)
     // Create a class that inherits the abstract class while implementing a interface.
-    // Create the instance, call Walk, ChangeMood and Speak
+	
+
+
+
+    	// Create the instance, call Walk, ChangeMood and Speak
+        var li = new WalkerPerson(Mood.CONFIDENT);
+        li.Walk(30);
+        li.ChangeMood(Mood.INSIGHTFUL);
+        li.Speak("How you doing?");
+
+        return 0;
+    }
 }

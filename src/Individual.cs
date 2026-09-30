@@ -75,15 +75,15 @@ enum Personality
     NOVEL
 };
 
-enum Mood
-{
-    DELIGHTED,
-    INSIGHTFUL,
-    UNGROUNDED,
-    NERVOUS,
-    MOCKING,
-    CONFIDENT
-};
+// enum Mood
+// {
+//     DELIGHTED,
+//     INSIGHTFUL,
+//     UNGROUNDED,
+//     NERVOUS,
+//     MOCKING,
+//     CONFIDENT
+// };
 
 class Person : Individual
 {
