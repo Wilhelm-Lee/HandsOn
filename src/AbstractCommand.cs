@@ -1,5 +1,6 @@
 namespace Foundational;
 
+// dotnet run --aplle 
 abstract class AbstractCommand : Executable
 {
     public string identifier { get; protected set; } = "";
@@ -27,17 +28,9 @@ abstract class AbstractCommand : Executable
         this.subcommands = [];
     }
 
-    // public string GetIdentifier()
-    // {
-    //     return this.identifier;
-    // }
-    //
-    // public AbstractCommand[] GetSubcommands()
-    // {
-    //     return this.subcommands;
-    // }
-
-    public virtual int Execute(string[] args)
+    private int counter = 0;
+    
+    public int Execute(string[] args)
     {
         return 0;
     }
