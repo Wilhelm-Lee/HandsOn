@@ -1,47 +1,17 @@
-using System;
-using System.Runtime.InteropServices;
-
 namespace HandsOn;
 
 internal static class Program
 {
     private static int Main()
     {
-        Console.WriteLine("Hello, world!");
-
-        // var indent = new Individual(10);
-        //
-        // indent.PrintAge();
-        // indent.SetAge(20);
-        // indent.PrintAge();
-
-        // Person li = new Person(12, HandsOn.Personality.TRADITIONAL);
-        // Person mo = new Person(12, HandsOn.Personality.NOVEL);
-        //
-        // li.HandShake(mo);
-        //
-        // li.Jump();
-        // mo.Talk();
-
-		
-
-    // Create an interface that declares:
-    //   1. ChangeMood(Mood newMood)
-    //   2. Speak(string content)
-    // Create an abstract class that is implementing a interface while keeping a method abstract.
-    //   int walkedMeters;
-    //   abstract Walk(int meters)
-    // Create a class that inherits the abstract class while implementing a interface.
-	
-
-
-
-    	// Create the instance, call Walk, ChangeMood and Speak
-        var li = new WalkerPerson(Mood.CONFIDENT);
-        li.Walk(30);
-        li.ChangeMood(Mood.INSIGHTFUL);
-        li.Speak("How you doing?");
-
+        /* Refactor the @username and @password as @Personnel, an individual class. */
+        
+        /* Protect @Personnel information from @PersonnelRegistry when being read by using deep copying to prevent Direct-Reference-Modification (DRM). */
+        
+        /* Implement a inserting method to add new @Personnel information onto @PersonnelRegistry.  (This task has traps.) */
+        
+        /* Establish a class inheriting @Exception to report RedundantRegistry when the given new @Personnel information is found existing in @PersonnelRegistry. */
+        
         return 0;
     }
 }

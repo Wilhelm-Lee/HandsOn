@@ -2,7 +2,7 @@ using System; // Dependencies
 
 namespace HandsOn;
 
-interface Actionable
+internal interface Actionable
 {
     public void Jump();
     public void Talk();
@@ -85,7 +85,7 @@ enum Personality
 //     CONFIDENT
 // };
 
-class Person : Individual
+internal class Person : Individual
 {
     private Personality personality;
 
@@ -97,7 +97,7 @@ class Person : Individual
     public override void HandShake(Individual another)
     {
         //throw new NotImplementedException();
-        // protect? anthoer.age 
+        // protect? another.age 
         Console.WriteLine($"Handshake with {another.name} {another.age}");
     }
 }

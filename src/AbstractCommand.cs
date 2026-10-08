@@ -28,8 +28,6 @@ abstract class AbstractCommand : Executable
         this.subcommands = [];
     }
 
-    private int counter = 0;
-    
     public int Execute(string[] args)
     {
         return 0;
