@@ -1,36 +1,96 @@
 using System.Runtime.Serialization;
-using System.Xml;
 
 namespace HandsOn;
 
+
+public class RedundantRegistry:Exception
+{
+    public RedundantRegistry(string? message):base(message)
+    {
+    }
+}
+
+
+
 public class PersonnelRegistry
 {
-    private string username;  // Refactor to @Personnel.  Remove this line from @PersonnelRegistry.
-    private string password;  // Refactor to @Personnel.  Remove this line from @PersonnelRegistry.
-
-    //private Dictionary<string, string> users = {};
+    private Dictionary<string, string> accounts = new();
 
     private Exception InvalidUsernameException =
         new InvalidDataContractException("username is invalid");
 
     private Exception InvalidPasswordException =
         new InvalidDataContractException("password is invalid");
+    
 
-    public PersonnelRegistry(string username, string password)
+
+    private RedundantRegistry redundantUsername = 
+        new RedundantRegistry("username is already taken");
+
+    
+    public void printAccounts()
     {
-        if (!handleUsernameFunction(username))
+        foreach (var account in accounts)
+        {
+            Console.WriteLine(
+                   "username: " + account.Key
+                   + "  " +
+                   "password: " + account.Value);
+        }
+    }
+
+    public void CheckValid(Personnel person)
+    {
+        
+        if (!handleUsernameFunction(person.username))
         {
             throw InvalidUsernameException;
         }
 
-        if (!handlePasswordFunction(password))
+        if (!handlePasswordFunction(person.password))
         {
             throw InvalidPasswordException;
         }
 
-        this.username = username;
-        this.password = password;
     }
+
+
+    // throw three kinds error
+    public void InsertPersonInformation(Personnel person)
+    {
+        this.CheckValid(person);
+
+        if (accounts.ContainsKey(person.username))
+        {
+            throw redundantUsername;
+        }
+
+        this.accounts[person.username] = person.password;
+    }
+
+
+    public static Personnel DeepCopy(Personnel person)
+    {
+
+        return new Personnel(person.username, person.password);
+    }
+
+
+    // public PersonnelRegistry(string username, string password)
+    // {
+    //     if (!handleUsernameFunction(username))
+    //     {
+    //         throw InvalidUsernameException;
+    //     }
+    //
+    //     if (!handlePasswordFunction(password))
+    //     {
+    //         throw InvalidPasswordException;
+    //     }
+    //
+    //     this.username = username;
+    //     this.password = password;
+    // }
 
 
     private bool handleUsernameFunction(string username)
@@ -90,36 +150,36 @@ public class PersonnelRegistry
         return false;
     }
 
-    public PersonnelRegistry? DeepCopy(PersonnelRegistry? registry)
-    {
-        if (registry is null)
-        {
-            return null;
-        }
-
-        return new PersonnelRegistry((string)registry.username.Clone(),
-            (string)registry.password.Clone());
-    }
-
-    public string GetUsername()
-    {
-        return username;
-    }
-
-    public string GetPassword()
-    {
-        return password;
-    }
-
-    public void SetUsername(string username)
-    {
-        this.username = username;
-    }
-
-    public void SetPassword(string password)
-    {
-        this.password = password;
-    }
+    // public PersonnelRegistry? DeepCopy(PersonnelRegistry? registry)
+    // {
+    //     if (registry is null)
+    //     {
+    //         return null;
+    //     }
+    //
+    //     return new PersonnelRegistry((string)registry.username.Clone(),
+    //         (string)registry.password.Clone());
+    // }
+    //
+    // public string GetUsername()
+    // {
+    //     return username;
+    // }
+    //
+    // public string GetPassword()
+    // {
+    //     return password;
+    // }
+    //
+    // public void SetUsername(string username)
+    // {
+    //     this.username = username;
+    // }
+    //
+    // public void SetPassword(string password)
+    // {
+    //     this.password = password;
+    // }
 
     /* username:  cannot be empty, pure whitespace-blank, less than 3 characters long, or have the following reserved words:
      *   1. null
