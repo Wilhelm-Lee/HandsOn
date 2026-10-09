@@ -20,12 +20,38 @@ internal static class Program
 
         /* Use UnimplementedException for unimplemented interface method declarations. */
 
-        var ls = new Command("ls", [new Command("", [])]);
-        Console.WriteLine(ls.GetterIndentifier());
+        // normal command
+        var ls = new DiverseCommand("ls", [new DiverseCommand("", [])]);
 
         ls.SetExcute(() => 255);
        
-        Console.WriteLine(ls.Execute());
+        Console.WriteLine(ls.GetIndentifier()
+                + " command return: "+
+                ls.Execute());
+
+
+        Console.WriteLine("--------------");
+        
+
+        // no implement execute method(interface)
+        try {
+            var file = new DiverseCommand("file", [new DiverseCommand("", [])]);
+            Console.WriteLine(file.Execute());
+        } catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+        }
+
+
+        // "su" is invalid Command identifier
+        try {
+            var file = new DiverseCommand("su", [new DiverseCommand("", [])]);
+            Console.WriteLine(file.Execute());
+        } catch (Exception e)
+        {
+            Console.WriteLine($"Error: {e.Message}");
+        }
+
         return 0;
     }
 }

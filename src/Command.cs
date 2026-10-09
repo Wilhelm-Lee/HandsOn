@@ -1,18 +1,15 @@
 namespace HandsOn;
 
-interface Executable
-{
-    int Execute();
-}
 
-public class Command : Executable
-{
-    private Func<int> ExecutesDele = () => 0;
-    private string Indentifier;
-    private Command[] SubCommands;
 
-    private Exception UnimplementedException =
-        new Exception("not  implement Execute command");
+
+public abstract class Command : Executable
+{
+    
+    protected string Indentifier;
+    protected Command[] SubCommands;
+
+
 
     public Command(string indentifier, Command[] commands)
     {
@@ -22,8 +19,10 @@ public class Command : Executable
         }
 
         this.Indentifier = (string)indentifier.Clone();
-        this.SubCommands = Command.DeepCopy(commands);
+        this.SubCommands = DeepCopy(commands);
     }
+
+
 
     public bool CheckIndentifier(string indentifier)
     {
@@ -35,12 +34,22 @@ public class Command : Executable
         return true;
     }
 
-    public string GetterIndentifier()
+
+    // -----------------------------------------
+    // Getter Setter for field
+    public string GetIndentifier()
     {
-        return this.Indentifier;
+        return (string)this.Indentifier.Clone();
     }
 
-    public void SetterIndentider(string indentifier)
+    public Command[] GetSubCommands()
+    {
+        return DeepCopy(this.SubCommands);
+    }
+
+
+
+    public void SetIndentider(string indentifier)
     {
         if (!CheckIndentifier(indentifier))
         {
@@ -50,38 +59,20 @@ public class Command : Executable
         this.Indentifier = (string)indentifier.Clone();
     }
 
-    public Command[] GetterSubCommands()
+    public void SetSubCommands(Command[] subcommands)
     {
-        return this.SubCommands;
+        this.SubCommands = DeepCopy(subcommands);
     }
 
-    public void SetterSubCommands(Command[] subcommands)
-    {
-        this.SubCommands = Command.DeepCopy(subcommands);
-    }
+    // Getter Setter for field
+    // -----------------------------------------
 
-    private static Command[] DeepCopy(Command[] commands)
-    {
-        Command[] copy = new Command[commands.Length];
 
-        int i = 0;
-        foreach (var command in commands)
-        {
-            copy[i] = new Command(command.GetterIndentifier(),
-                command.GetterSubCommands());
-            i++;
-        }
 
-        return copy;
-    }
+    // abstract method
+    protected abstract Command[] DeepCopy(Command[] commands);
 
-    public void SetExcute(Func<int> execute)
-    {
-        this.ExecutesDele = execute;
-    }
 
-    public int Execute()
-    {
-        return this.ExecutesDele();
-    }
+    public abstract int Execute();
+
 }
