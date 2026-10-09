@@ -1,41 +1,17 @@
-using System.Runtime.Serialization;
-
 namespace HandsOn;
-
-
-public class RedundantRegistry:Exception
-{
-    public RedundantRegistry(string? message):base(message)
-    {
-    }
-}
-
-
 
 public class PersonnelRegistry
 {
     private Dictionary<string, string> accounts = new();
 
-    private Exception InvalidUsernameException =
-        new InvalidDataContractException("username is invalid");
-
-    private Exception InvalidPasswordException =
-        new InvalidDataContractException("password is invalid");
-    
-
-
-    private RedundantRegistry redundantUsername = 
-        new RedundantRegistry("username is already taken");
-
-    
     public void printAccounts()
     {
         foreach (var account in accounts)
         {
             Console.WriteLine(
-                   "username: " + account.Key
-                   + "  " +
-                   "password: " + account.Value);
+                "username: " + account.Key
+                             + "  " +
+                             "password: " + account.Value);
         }
     }
 
@@ -44,12 +20,12 @@ public class PersonnelRegistry
         
         if (!handleUsernameFunction(person.username))
         {
-            throw InvalidUsernameException;
+            throw new InvalidUsernameException();
         }
 
         if (!handlePasswordFunction(person.password))
         {
-            throw InvalidPasswordException;
+            throw new InvalidPasswordException();
         }
 
     }
@@ -58,21 +34,22 @@ public class PersonnelRegistry
     // throw three kinds error
     public void InsertPersonInformation(Personnel person)
     {
-        this.CheckValid(person);
+        Personnel copy = DeepCopy(person);
+        
+        this.CheckValid(copy);
 
-        if (accounts.ContainsKey(person.username))
+        if (accounts.ContainsKey(copy.username))
         {
-            throw redundantUsername;
+            throw new RedundantRegistryException();
         }
 
-        this.accounts[person.username] = person.password;
+        this.accounts[copy.username] = copy.password;
     }
 
 
     public static Personnel DeepCopy(Personnel person)
     {
-
-        return new Personnel(person.username, person.password);
+        return new Personnel((string)person.username.Clone(), (string)person.password.Clone());
     }
 
 
