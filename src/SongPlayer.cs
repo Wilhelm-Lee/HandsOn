@@ -18,13 +18,13 @@ public class SongPlayer : IPlayable
             return;
         }
 
-        if (playlist.CheckSongExist(song.GetIndentifier()))
-        {
-            Console.WriteLine($"~~Listening the song {song.GetSongName()} ~~");
-
-            // 3min 
-            return;
-        }
+        // if (playlist.CheckSongExist(song.GetIndentifier()))
+        // {
+        //     Console.WriteLine($"~~Listening the song {song.GetSongName()} ~~");
+        //
+        //     // 3min 
+        //     return;
+        // }
        
         //throw new NotImplementedException();  // ?
     }

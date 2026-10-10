@@ -3,29 +3,50 @@ namespace HandsOn;
 using System.Collections;
 
 
+/*
+ *
+ *  Field
+ *  private List<string> songList
+ *
+ *  Function
+ *
+ *  public bool Add(string indentifier);
+ *  public bool Add(string[] indentifiers);
+ *  public bool Remove(string indentifier);
+ *  public bool Remove(string[] indentifiers);
+ *  public bool CheckSongExist(String indentifier);
+ *
+ */
+
+
+
 public class Playlist
 {
     
-    // storage struct using dictory?
     private List<string> songList = new();
+
+    // How to reference backSongs ?  Instead of load
     private BackSongs backSongs;
 
-    //private Dictionary<int, string> playList = new();
-    // How to deal with list method record order
+
+    // indentifier in playlist, but backSongs remove, Todo handle it --- need retrun resourse not found and remove it from list
 
 
+
+    // Constructor
     public Playlist(string[] indentifiers, BackSongs backSongs)
     {
-        this.Add(indentifiers);
         this.backSongs = backSongs;
+        this.Add(indentifiers);
     }
-
     /* Copy the songs from another @Playlist. */
     public Playlist(Playlist playlist, BackSongs backSongs)
     {
         this.backSongs = backSongs;
         this.songList = playlist.GetSongList();
     }
+
+
 
 
     // + DeepCopy
@@ -40,6 +61,12 @@ public class Playlist
     }
 
     
+    // public bool Add(string indentifier);
+    // public bool Add(string[] indentifiers);
+    // public bool Remove(string indentifier);
+    // public bool Remove(string[] indentifiers);
+    // public void show();
+    // public bool CheckSongExist(String indentifier);
      
     // ---------------------- Add & Remove & Show method
     
@@ -85,13 +112,15 @@ public class Playlist
         {
             return false;
         }
-        if ( !backSongs.CheckIndentifierExist(indentifier) || !songList.Contains(indentifier) )
-        {
-            return false;
-        }
-        // If return true dele successful, return false key not exist
-        songList.Remove(indentifier);
-        return true;
+        // remove not need resource in backend
+        //if ( !backSongs.CheckIndentifierExist(indentifier) || !songList.Contains(indentifier) )
+        // if ( !songList.Contains(indentifier) )
+        // {
+        //     return false;
+        // }
+
+        // If return true dele successful, return false  not exist in list
+        return songList.Remove(indentifier);
     }
     
     /* Returns true on successful operations; false otherwise. */
@@ -104,6 +133,7 @@ public class Playlist
         
         foreach (var indentifier in indentifiers)
         {
+            // class method
             if (!this.Remove(indentifier))
             {
                 Console.WriteLine($"Remove Failed after {indentifier}");
@@ -113,6 +143,14 @@ public class Playlist
         return true;
     }
 
+
+    // exist return true, else return false
+    public bool CheckSongExist(String indentifier)
+    {
+        return songList.Contains(indentifier);
+    }
+
+    // Test
     public void show()
     {
         foreach (var indentifier in this.songList)
@@ -121,11 +159,4 @@ public class Playlist
         }
     }
 
-    // exist return true, else return false
-    public bool CheckSongExist(String indentifier)
-    {
-        return songList.Contains(indentifier);
-    }
-
-    // ---------------------- Add & Remove & Show method
 }
