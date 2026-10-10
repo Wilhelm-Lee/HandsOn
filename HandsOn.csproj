@@ -9,5 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Workload.Mono.ToolChain.Current.Manifest-8.0.100" Version="8.0.31" />
+    <PackageReference Include="NAudio" Version="3.1.0" />
   </ItemGroup>
 </Project>
