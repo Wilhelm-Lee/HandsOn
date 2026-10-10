@@ -15,29 +15,12 @@ public class SongPlayer : IPlayable
         {
             // Implement ? error
             Console.WriteLine("no song in songPlayer");
-            // return
             return;
         }
 
+
+        Console.WriteLine($"Listening the song {song.GetSongName} ~~");
        
         throw new NotImplementedException();  // ?
     }
 }
-
-//public void Play(string path)
-//{
-    ///* Implement this. */
-    //foreach (var song in  this.playlist )
-    //{
-        //paths  =  song.GetAbsolutePath()
-        //Console.WriteLine("play the song" + $"{path}");
-    //}
-    //throw new NotImplementedException();
-//}
-
-//public void Play(string[]? path)
-//{
-    ///* Implement this. */
-        //
-    //throw new NotImplementedException();
-//}

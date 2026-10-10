@@ -7,6 +7,13 @@ public class Song
     private long song_length = 0;
     
     /* Write a constructor for all of these three members. */
+
+    public Song(string absolutePath, string song_name, long song_length)
+    {
+        this.absolute_path = absolutePath;
+        this.song_name = song_name;
+        this.song_length = song_length;
+    }
     
     // Getter
     public string GetAbsolutePath()
@@ -31,7 +38,7 @@ public class Song
     {
         this.song_name = (string)songName.Clone();
     } 
-    public void GetSongLength(long songLength)
+    public void SetSongLength(long songLength)
     {
         this.song_length = songLength;
     }

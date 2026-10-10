@@ -2,7 +2,7 @@ namespace HandsOn;
 
 internal static class Program
 {
-    private static int Main()
+    private static void Main()
     {
         /* Items marked with ! ahead are deemed completed.  Requirement: Finish the modularisation and fix the typos. */
 
@@ -21,37 +21,59 @@ internal static class Program
         /* Use UnimplementedException for unimplemented interface method declarations. */
 
         // normal command
-        var ls = new DiverseCommand("ls", [new DiverseCommand("", [])]);
+    //     var ls = new DiverseCommand("ls", [new DiverseCommand("", [])]);
+    //
+    //     ls.SetExcute(() => 255);
+    //
+    //     Console.WriteLine(ls.GetIndentifier()
+    //             + " command return: "+
+    //             ls.Execute());
+    //
+    //
+    //     Console.WriteLine("--------------");
+    //
+    //
+    //     // no implement execute method(interface)
+    //     try {
+    //         var file = new DiverseCommand("file", [new DiverseCommand("", [])]);
+    //         Console.WriteLine(file.Execute());
+    //     } catch (Exception e)
+    //     {
+    //         Console.WriteLine($"Error: {e.Message}");
+    //     }
+    //
+    //
+    //     // "su" is invalid Command identifier
+    //     try {
+    //         var file = new DiverseCommand("su", [new DiverseCommand("", [])]);
+    //         Console.WriteLine(file.Execute());
+    //     } catch (Exception e)
+    //     {
+    //         Console.WriteLine($"Error: {e.Message}");
+    //     }
+    //
+    //     return 0;
+    // }
 
-        ls.SetExcute(() => 255);
-       
-        Console.WriteLine(ls.GetIndentifier()
-                + " command return: "+
-                ls.Execute());
 
 
-        Console.WriteLine("--------------");
-        
+        Song song1 = new Song("~/Music/song1.m4a", "song1", 100);
+        Song song2 = new Song("~/Music/song2.m4a", "song2", 100);
+        Song song3 = new Song("~/Music/song3.m4a", "song3", 100);
+        Song song4 = new Song("~/Music/song4.m4a", "song4", 100);
+        Song song5 = new Song("~/Music/song5.m4a", "song5", 100);
 
-        // no implement execute method(interface)
-        try {
-            var file = new DiverseCommand("file", [new DiverseCommand("", [])]);
-            Console.WriteLine(file.Execute());
-        } catch (Exception e)
-        {
-            Console.WriteLine($"Error: {e.Message}");
-        }
+        Console.WriteLine(song1.GetAbsolutePath());
+        Console.WriteLine(song1.GetSongName());
+        Console.WriteLine(song1.GetSongLength());
+
+        Playlist nature_playlist = new([song1, song2, song3]);
 
 
-        // "su" is invalid Command identifier
-        try {
-            var file = new DiverseCommand("su", [new DiverseCommand("", [])]);
-            Console.WriteLine(file.Execute());
-        } catch (Exception e)
-        {
-            Console.WriteLine($"Error: {e.Message}");
-        }
+        nature_playlist.Add(song4);
+        nature_playlist.Add(song5);
 
-        return 0;
+        nature_playlist.show();
+
     }
 }
