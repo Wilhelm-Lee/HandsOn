@@ -5,77 +5,73 @@ using System.Collections;
 
 public class Playlist
 {
-    // https://www.google.com/search?client=firefox-b-d&q=in+C%23%2C+which+container+has+the+redundancy+detection
     
     // storage struct using dictory?
-    private HashSet<Song> songsStorage = new ();
+    private List<string> songList = new();
+    private BackSongs backSongs;
 
     //private Dictionary<int, string> playList = new();
     // How to deal with list method record order
 
 
-    public Playlist(Song[] songs)
+    public Playlist(string[] indentifiers, BackSongs backSongs)
     {
-        this.Add(songs);
+        this.Add(indentifiers);
+        this.backSongs = backSongs;
     }
 
     /* Copy the songs from another @Playlist. */
-    public Playlist(Playlist playlist)
+    public Playlist(Playlist playlist, BackSongs backSongs)
     {
-        this.songsStorage = this.GetStorage();
+        this.backSongs = backSongs;
+        this.songList = playlist.GetSongList();
     }
 
 
-    public HashSet<Song> GetStorage()
+    // + DeepCopy
+    public List<string> GetSongList()
     {
-        this.songsStorage = DeepCopy();
-        return this.songsStorage;
-    }
-
-
-    private HashSet<Song> DeepCopy()
-    {
-        HashSet<Song> copySongStorage = new();
-        foreach (var song in this.songsStorage)
+        List<string> copyList = new();
+        foreach (var indentifier in this.songList)
         {
-            var copySong = new Song(
-                    song.GetAbsolutePath(),
-                    song.GetSongName(),
-                    song.GetSongLength()
-                    );
-
-            copySongStorage.Add(copySong);
+            copyList.Add((string)indentifier.Clone());
         }
-        return copySongStorage;
+        return copyList;
     }
+
     
      
-    // ---------------------- Add & Remove  method
+    // ---------------------- Add & Remove & Show method
     
     /* Returns true on successful operations; false otherwise. */
-    public bool Add(Song? song)
+    public bool Add(string indentifier)
     {
-        if (song == null)
+        if (indentifier == null || indentifier == "")
+        {
+            return false;
+        }
+        if ( !backSongs.CheckIndentifierExist(indentifier) || songList.Contains(indentifier) )
         {
             return false;
         }
         // If have a repeat key in dict no throw error , return false in silence
-        return  this.songsStorage.Add(song);
+        songList.Add(indentifier);
+        return  true;
     }
 
     /* Returns true on successful operations; false otherwise. */
-    public bool Add(Song[]? songs)
+    public bool Add(string[] indentifiers)
     {
-        if (songs == null)
+        if (indentifiers == null)
         {
             return false;
         }
 
-        foreach (var song in songs)
+        foreach (var indentifier in indentifiers)
         {
-            if (!this.Add(song))
+            if (!this.Add(indentifier))
             {
-                Console.WriteLine($"Insert Failed after {song.GetSongName}");
+                Console.WriteLine($"Insert Failed after {indentifier}");
                 return false;
             }
         }
@@ -83,29 +79,34 @@ public class Playlist
     }
 
     /* Returns true on successful operations; false otherwise. */
-    public bool Remove(Song? song)
+    public bool Remove(string indentifier)
     {
-        if (song == null)
+        if (indentifier == null || indentifier == "")
+        {
+            return false;
+        }
+        if ( !backSongs.CheckIndentifierExist(indentifier) || !songList.Contains(indentifier) )
         {
             return false;
         }
         // If return true dele successful, return false key not exist
-        return this.songsStorage.Remove(song);
+        songList.Remove(indentifier);
+        return true;
     }
     
     /* Returns true on successful operations; false otherwise. */
-    public bool Remove(Song[]? songs)
+    public bool Remove(string[] indentifiers)
     {
-        if (songs == null)
+        if (indentifiers == null)
         {
             return false;
         }
         
-        foreach (var song in songs)
+        foreach (var indentifier in indentifiers)
         {
-            if (!this.Remove(song))
+            if (!this.Remove(indentifier))
             {
-                Console.WriteLine($"Remove Failed after {song.GetSongName}");
+                Console.WriteLine($"Remove Failed after {indentifier}");
                 return false;
             }
         }
@@ -114,11 +115,17 @@ public class Playlist
 
     public void show()
     {
-        foreach (var song in this.songsStorage)
+        foreach (var indentifier in this.songList)
         {
-            Console.WriteLine(song.GetSongName());
+            Console.WriteLine(indentifier);
         }
     }
-    
-    // ---------------------- Add & Remove  method
+
+    // exist return true, else return false
+    public bool CheckSongExist(String indentifier)
+    {
+        return songList.Contains(indentifier);
+    }
+
+    // ---------------------- Add & Remove & Show method
 }

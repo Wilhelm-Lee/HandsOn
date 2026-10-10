@@ -2,7 +2,7 @@ namespace HandsOn;
 
 public class SongPlayer : IPlayable
 {
-    private Playlist playlist = null;
+    private Playlist? playlist = null;
     private PlayMode playMode = PlayMode.STOP_AFTER_THIS;
     private int indexOfCurrentPlayingSong = 0;
     private bool isPlaying = false;
@@ -18,9 +18,17 @@ public class SongPlayer : IPlayable
             return;
         }
 
+        if (playlist.CheckSongExist(song.GetIndentifier()))
+        {
+            Console.WriteLine($"~~Listening the song {song.GetSongName()} ~~");
 
-        Console.WriteLine($"Listening the song {song.GetSongName} ~~");
+            // 3min 
+            return;
+        }
        
-        throw new NotImplementedException();  // ?
+        //throw new NotImplementedException();  // ?
     }
+
+
+    // Todo Pause Song
 }
