@@ -97,7 +97,7 @@ internal static class Program
 
 
 
-        SongPlayer musciPlayer = new();
+        SongPlayer musciPlayer = new(nature_playlist);
         musciPlayer.Play(song1);
 
 
